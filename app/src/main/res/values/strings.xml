@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">30_Days_of_Indie_Gaming</string>
+
     <string name="game1">Eternal Senia</string>
     <string name="game2">Ao Oni</string>
+    <string name="game3">Mad Father</string>
+    <string name="game4">Moo Leap</string>
+
+    <string name="description_game1">This game is awesome</string>
+    <string name="description_gaem2">This gemis scary</string>
+    <string name="description_game3">This game is morbidly scary and awesome</string>
+    <string name="description_game4">This game is very fun</string>
 </resources>

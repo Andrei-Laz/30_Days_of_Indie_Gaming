@@ -5,7 +5,9 @@ import com.example.a30_days_of_indie_gaming.R
 
 object DataSource {
     val games = listOf(
-        Game(R.string.game1, "This game is awesome", R.drawable.ic_launcher_background),
-        Game(R.string.game2, "This game is scary", R.drawable.ic_launcher_background)
+        Game(1, R.string.game1, R.string.description_game1, R.drawable.eternal_senia),
+        Game(2, R.string.game2, R.string.description_gaem2, R.drawable.ao_oni),
+        Game(3, R.string.game3, R.string.description_game3, R.drawable.mad_father),
+        Game(4, R.string.game4, R.string.description_game4, R.drawable.moon_leap)
     )
 }
