@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.a30_days_of_indie_gaming
 
 import android.os.Bundle
@@ -17,10 +19,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -38,46 +44,88 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             _30_Days_of_Indie_GamingTheme {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .statusBarsPadding()
-                ) {
-                    Games(
-                        modifier = Modifier.padding(
-                            start = dimensionResource(id = R.dimen.medium_padidng),
-                            top = dimensionResource(id = R.dimen.medium_padidng),
-                            end = dimensionResource(id = R.dimen.medium_padidng)
-                        ))}
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("30 Days of Indie Gaming") },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        )
+                    }
+                ) { innerPadding ->
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        Games(
+                            modifier = Modifier.padding(
+                                start = dimensionResource(id = R.dimen.medium_padidng),
+                                top = dimensionResource(id = R.dimen.medium_padidng),
+                                end = dimensionResource(id = R.dimen.medium_padidng)
+                            )
+                        )
+                    }
+                }
             }
         }
+
     }
 }
 
 @Composable
 fun GameCard(game: Game, modifier: Modifier = Modifier) {
-    Card {
-        Column {
-            Text (text = game.day.toString())
-            Text (text = stringResource(id = game.name))
-            Image (
-                painter = painterResource(id = game.imageRes),
-                contentDescription = null,
-                modifier = modifier
-                    .size(width = 500.dp, height = 350.dp)
-                    .aspectRatio(1f),
+    Card(
+        modifier = modifier
+            .padding(8.dp)
+            .fillMaxSize(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Día ${game.day}",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary
             )
-            Text (text = game.description)
+            Text(
+                text = stringResource(id = game.name),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Image(
+                painter = painterResource(id = game.imageRes),
+                contentDescription = stringResource(id = game.name),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 8.dp)
+                    .aspectRatio(16f / 9f)
+            )
+            Text(
+                text = stringResource(id = game.description),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }
 
+
 @Composable
 fun Games(modifier: Modifier = Modifier) {
-    LazyVerticalGrid (
-        columns = GridCells.Fixed(1)
-    ){
-        items(DataSource.games) {game ->
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(1),
+        modifier = modifier.padding(vertical = 8.dp)
+    ) {
+        items(DataSource.games) { game ->
             GameCard(game)
         }
     }
